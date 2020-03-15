@@ -1,59 +1,55 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using Main;
 
-namespace Main
-{
-
-    public delegate void OnEnterCell(Vector3 pos);
-    public delegate void OnExitCell();
-    public delegate void OnClickedCell();
-
+namespace VisualEffects
+{ 
     public sealed class UnitsPool : ClickedOnCellModule
     {
         private readonly byte AMOUNT_UNITS = 5;
 
         [SerializeField] private GameObject orcReference = null, knightReference = null;
         [SerializeField] private Transform unitsParent = null;
-        [SerializeField] private CellsStorage cellsStorage = null;
         [SerializeField] private PlayersSwitcher playersSwitcher = null;
         [SerializeField] private EventSystem eventSystem = null;
-
 
         private GameObject[] orcs;
         private GameObject[] knights;
         private byte currentOrcIndex;
         private byte currentKnightIndex;
-        private OnEnterCell OnEnterCell;
-        private OnExitCell OnExitCell;
+        public OnEnterCell OnEnterCell { get; private set; }
+        public OnExitCell OnExitCell { get; private set; }
         private OnClickedCell OnClickedCell;
         private GameObject currentObject;
+
+        public override OnClickedCell GetClickedCell() => OnClickedCell;
+
 
         private GameObject GetCurrentOrc() => orcs[currentOrcIndex];
         private GameObject GetCurrentKnight() => knights[currentKnightIndex];
 
+        private void ChangeCurrentObjectState(bool state) => currentObject.SetActive(state);
+
         private void EnterObjectState(Vector3 pos)
         {
-            currentObject = (playersSwitcher.currentPlayer.id == 0) ?
-            GetCurrentOrc() : GetCurrentKnight();
+            currentObject = playersSwitcher.currentPlayer.Equals(0) ? GetCurrentOrc() 
+            : GetCurrentKnight();
 
-            currentObject.SetActive(true);
+            ChangeCurrentObjectState(true);
             currentObject.transform.position = pos;
 
         }
 
-        private void ExitObjectState()
-        {
-            currentObject.SetActive(false);
-        }
+        private void ExitObjectState() => ChangeCurrentObjectState(false);
 
         private void ClickedObjectState()
         {
-            eventSystem.currentSelectedGameObject.GetComponent<Cell>().SetPlayerId(playersSwitcher.currentPlayer.id);
-            currentObject.SetActive(true);
-            currentObject.GetComponent<Rigidbody>().useGravity = true;
-            currentObject.transform.GetChild(0).GetComponent<Animator>().enabled = true;
+            eventSystem.currentSelectedGameObject.GetComponent<Cell>().SetPlayerId(playersSwitcher.currentPlayer.ID);
 
-            _ = (playersSwitcher.currentPlayer.id == 0) ? currentOrcIndex++ : currentKnightIndex++;
+            ChangeCurrentObjectState(true);
+            currentObject.GetComponent<Unit>().Activate();
+
+            _ = playersSwitcher.currentPlayer.Equals(0) ? currentOrcIndex++ : currentKnightIndex++;
         }
 
         private void InitObjects()
@@ -74,19 +70,13 @@ namespace Main
         private void Awake()
         {
             OnClickedCell = ClickedObjectState;
+            OnEnterCell = EnterObjectState;
+            OnExitCell = ExitObjectState;
         }
 
         private void Start()
         {
             InitObjects();
-
-            OnEnterCell = EnterObjectState;
-            OnExitCell = ExitObjectState;
-
-            cellsStorage.AddOnStatesListeners(OnEnterCell, OnExitCell);
         }
-
-        public override OnClickedCell GetClickedCell() => OnClickedCell;
-        
     }
 }

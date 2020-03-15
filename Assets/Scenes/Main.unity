@@ -1244,7 +1244,7 @@ Transform:
   - {fileID: 316760521}
   - {fileID: 1944619907}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &306986084
 GameObject:
@@ -3643,7 +3643,7 @@ Transform:
   - {fileID: 1081277082}
   - {fileID: 574802600}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1233906378
 MonoBehaviour:
@@ -3658,6 +3658,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellsParent: {fileID: 1233906377}
+  unitsPool: {fileID: 2039426156}
 --- !u!1 &1244301100
 GameObject:
   m_ObjectHideFlags: 0
@@ -3709,7 +3710,6 @@ MonoBehaviour:
   outputTurn: {fileID: 1881194992}
   colorPlayerOneName: B8FD00
   colorPlayerTwoName: 00FFD4
-  cellsStorage: {fileID: 1233906378}
   orcSound: {fileID: 31132495}
   knightSound: {fileID: 636729761}
 --- !u!114 &1244301103
@@ -4534,7 +4534,7 @@ RectTransform:
   - {fileID: 1636416224}
   - {fileID: 367962803}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -5726,7 +5726,7 @@ Transform:
   - {fileID: 1817777876}
   - {fileID: 782175355}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2039426154
 GameObject:
@@ -5757,7 +5757,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2039426156
 MonoBehaviour:
@@ -5776,7 +5776,6 @@ MonoBehaviour:
   knightReference: {fileID: 2322724756644259520, guid: 9f09fa5679d591a4bad2962c560cc9ab,
     type: 3}
   unitsParent: {fileID: 2039426155}
-  cellsStorage: {fileID: 1233906378}
   playersSwitcher: {fileID: 1244301102}
   eventSystem: {fileID: 1328080868}
 --- !u!1 &2099943739

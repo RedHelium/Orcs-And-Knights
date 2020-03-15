@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3060199571924389441}
   - component: {fileID: 1303832551948500472}
   - component: {fileID: 8807807095132384316}
+  - component: {fileID: -9104055200139969364}
   m_Layer: 0
   m_Name: Orc
   m_TagString: Untagged
@@ -63,6 +64,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 122
   m_CollisionDetection: 0
+--- !u!114 &-9104055200139969364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3060199571924389442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb171052b06db4b46a6c38649f3486ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Rigidbody: {fileID: 0}
+  animator: {fileID: 0}
 --- !u!1001 &3060199571903783085
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,11 +1,20 @@
 ﻿using UnityEngine;
+using VisualEffects;
 
 namespace Main
 {
+    public delegate void OnEnterCell(Vector3 pos);
+    public delegate void OnExitCell();
+    public delegate void OnClickedCell();
+
+    /// <summary>
+    /// Cell collection storage
+    /// </summary>
     public sealed class CellsStorage : MonoBehaviour
     {
         [SerializeField, HideInInspector,GetComponent]
         private Transform cellsParent = null;
+        [SerializeField] private UnitsPool unitsPool = null;
 
         public Cell[] cells { get; private set; }
 
@@ -29,33 +38,26 @@ namespace Main
             for (byte cellIndex = 0; cellIndex < cellsParent.childCount; cellIndex++)
             {
                 cells[cellIndex] = cellsParent.GetChild(cellIndex).GetComponent<Cell>();
-                cells[cellIndex].SetPlayerId((byte)(cellIndex + 2));
+                cells[cellIndex].SetPlayerId((byte)(cellIndex + 2)); // cellIndex + 2 because 0 and 1 identifiers belong to players
             }
         }
 
         public void AddOnCellClickListeners(OnClickedCell onCellClick)
         {
             foreach(Cell cell in cells)
-            {
-                cell.AddClickListener(onCellClick);
-            }
+                cell.AddClickListener(onCellClick);          
         }
 
         public void RemoveOnCellClickListeners(OnClickedCell onCellClick)
         {
             foreach (Cell cell in cells)
-            {
-                cell.RemoveClickListener(onCellClick);
-            }
+                cell.RemoveClickListener(onCellClick);        
         }
 
         public void AddOnStatesListeners(OnEnterCell OnEnterCell, OnExitCell OnExitCell)
         {
             foreach (Cell cell in cells)
-            {
-                cell.AddEnterListener(OnEnterCell);
-                cell.AddExitListener(OnExitCell);
-            }
+                cell.AddEnterAndExitListeners(OnEnterCell, OnExitCell);        
         }
 
         private void Awake()
@@ -63,6 +65,9 @@ namespace Main
             InitCells();
         }
 
-
+        private void Start()
+        {
+            AddOnStatesListeners(unitsPool.OnEnterCell, unitsPool.OnExitCell);
+        }
     }
 }

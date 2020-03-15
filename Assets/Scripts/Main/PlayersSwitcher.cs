@@ -6,26 +6,23 @@ namespace Main
     
     public sealed class PlayersSwitcher : ClickedOnCellModule
     {
-        [SerializeField]
-        private string playerNameOne = "Orc", playerNameTwo = "Knight";
-        [SerializeField]
-        private byte currentPlayerID = 0;
-        [SerializeField]
-        private Text outputTurn = null;
-        [SerializeField]
-        private string colorPlayerOneName = "B8FD00",
+        private readonly string TURN_HEADER = "<b><size=52>TURN</size></b> \n";
+
+        [SerializeField] private string playerNameOne = "Orc", playerNameTwo = "Knight";
+        [SerializeField] private byte currentPlayerID = 0;
+        [SerializeField] private Text outputTurn = null;
+        [SerializeField] private string colorPlayerOneName = "B8FD00", 
         colorPlayerTwoName = "00FFD4";
-        [SerializeField]
-        private CellsStorage cellsStorage = null;
         [SerializeField] private AudioSource orcSound = null, knightSound = null;
 
-
         private Player playerOne, playerTwo;
-        private string turnFormatText;
         private OnClickedCell OnCellClick;
         private Animator textTurnAnimator;
 
         public Player currentPlayer { get; private set; }
+
+        public override OnClickedCell GetClickedCell() => OnCellClick;
+
 
         private void InitPlayers()
         {
@@ -35,21 +32,16 @@ namespace Main
             currentPlayer = (currentPlayerID == 0) ? playerOne : playerTwo;
         }
 
+        private void PrintCurrentTurn() => outputTurn.text = TURN_HEADER + FormatPlayerName();
         
-        private void PrintCurrentTurn()
-        {
-            turnFormatText = "<b><size=52>TURN</size></b>" + "\n" + FormatPlayerName();
-
-            outputTurn.text = turnFormatText;
-        }
-
         public string FormatPlayerName()
-        => "<color=#" + ((currentPlayer.id == 0) ? colorPlayerOneName : colorPlayerTwoName)
-        + ">"  + currentPlayer.name + "</color>";
+        => "<color=#" + ((currentPlayer.ID == 0) ? colorPlayerOneName : colorPlayerTwoName)
+        + ">"  + currentPlayer.Name + "</color>";
         
         private void ChangeTurn()
         {
-            if (currentPlayer.id == playerOne.id)
+
+            if (currentPlayer.Equals(playerOne.ID))
             {
                 orcSound.Play();
                 currentPlayer = playerTwo;
@@ -76,7 +68,5 @@ namespace Main
             textTurnAnimator = outputTurn.GetComponent<Animator>();
 
         }
-
-        public override OnClickedCell GetClickedCell() => OnCellClick;
     }
 }

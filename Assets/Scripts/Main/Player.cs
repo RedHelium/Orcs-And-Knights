@@ -1,15 +1,20 @@
-﻿namespace Main
+﻿using System.Collections.Generic;
+
+namespace Main
 {
 
     public sealed class Player
     {
-        public byte id { get; private set; }
-        public string name { get; private set; }
+        public byte ID { get; private set; }
+        public string Name { get; private set; }
 
         public Player(byte id, string name)
         {
-            this.id = id;
-            this.name = name;
+            ID = id;
+            Name = name;
         }
+
+        public  bool Equals(byte id) => ID == id;
+      
     }
 }

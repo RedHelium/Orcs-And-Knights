@@ -2,6 +2,9 @@
 
 namespace Main
 {
+    /// <summary>
+    /// Base class for all classes that subscribe to a cell click event
+    /// </summary>
     public abstract class ClickedOnCellModule : MonoBehaviour
     {
         public abstract OnClickedCell GetClickedCell();
@@ -15,18 +18,14 @@ namespace Main
         private void Start()
         {
             for (byte index = 0; index < ClickedOnCellModules.Length; index++)
-            {
-                cellsStorage.AddOnCellClickListeners(ClickedOnCellModules[index].GetClickedCell());
-            }
+                cellsStorage.AddOnCellClickListeners(ClickedOnCellModules[index].GetClickedCell());          
         }
 
         private void OnDestroy()
         {
             for (byte index = 0; index < ClickedOnCellModules.Length; index++)
-            {
                 cellsStorage.RemoveOnCellClickListeners(
-                ClickedOnCellModules[index].GetClickedCell());
-            }
+                ClickedOnCellModules[index].GetClickedCell());       
         }
     }
 }
